@@ -7,36 +7,42 @@ import {
   selectCartItems,
   selectCartTotal,
 } from "../../redux/cart/cart.selectors";
+import {
+  CheckoutHeaderContainer,
+  CheckoutPageContainer,
+  HeaderBlockContainer,
+  TotalContainer,
+} from "./checkout.styles";
 
-import "./checkout.styles.scss";
+// import "./checkout.styles.scss";
 
 const CheckoutPage = ({ total, cartItems }) => (
-  <div className="checkout-page">
-    <div className="checkout-header">
+  <CheckoutPageContainer>
+    <CheckoutHeaderContainer>
       <div className="header-block">
         <span>Products</span>
       </div>
-      <div className="header-block">
+      <HeaderBlockContainer>
         <span>Description</span>
-      </div>
-      <div className="header-block">
+      </HeaderBlockContainer>
+      <HeaderBlockContainer>
         <span>Quantity</span>
-      </div>
-      <div className="header-block">
+      </HeaderBlockContainer>
+      <HeaderBlockContainer>
         <span>Price</span>
-      </div>
-      <div className="header-block">
+      </HeaderBlockContainer>
+      <HeaderBlockContainer>
         <span>Remove</span>
-      </div>
-    </div>
+      </HeaderBlockContainer>
+    </CheckoutHeaderContainer>
     {cartItems.map((cartItem) => (
       <CheckoutItem key={cartItem.id} cartItem={cartItem} />
     ))}
-    <div className="total">
+    <TotalContainer>
       <span>Total: ${total}</span>
-    </div>
+    </TotalContainer>
     <StripeCheckoutButton price={total} />
-  </div>
+  </CheckoutPageContainer>
 );
 
 const mapStateToProps = createStructuredSelector({
