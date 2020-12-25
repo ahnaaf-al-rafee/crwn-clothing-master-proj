@@ -1,44 +1,43 @@
-import React from "react";
-import { connect } from "react-redux";
-import CustomButton from "../custom-button/custom-button.component";
-import CartItem from "../cart-item/cart-item.component";
+import React from 'react';
+import { connect } from 'react-redux';
+import { createStructuredSelector } from 'reselect';
+import { withRouter } from 'react-router-dom';
 
-// import "./cart-dropdown.styles.scss";
-import { selectCartItems } from "../../redux/cart/cart.selectors";
-import { createStructuredSelector } from "reselect";
-import { withRouter } from "react-router-dom";
-import { toggleCartHidden } from "../../redux/cart/cart.actions";
+import CartItem from '../cart-item/cart-item.component';
+import { selectCartItems } from '../../redux/cart/cart.selectors';
+import { toggleCartHidden } from '../../redux/cart/cart.actions.js';
+
 import {
-  CartDropDownContainer,
-  CartItemsContainer,
+  CartDropdownContainer,
+  CartDropdownButton,
   EmptyMessageContainer,
-} from "./cart-dropdown.styles";
+  CartItemsContainer
+} from './cart-dropdown.styles';
 
-const CartDropDown = ({ cartItems, history, dispatch }) => (
-  <CartDropDownContainer>
+const CartDropdown = ({ cartItems, history, dispatch }) => (
+  <CartDropdownContainer>
     <CartItemsContainer>
       {cartItems.length ? (
-        cartItems.map((cartItem) => (
+        cartItems.map(cartItem => (
           <CartItem key={cartItem.id} item={cartItem} />
         ))
       ) : (
-        <EmptyMessageContainer>Your cart is Empty!</EmptyMessageContainer>
+        <EmptyMessageContainer>Your cart is empty</EmptyMessageContainer>
       )}
     </CartItemsContainer>
-    <CustomButton
+    <CartDropdownButton
       onClick={() => {
-        history.push("/checkout");
+        history.push('/checkout');
         dispatch(toggleCartHidden());
       }}
     >
-      {" "}
       GO TO CHECKOUT
-    </CustomButton>
-  </CartDropDownContainer>
+    </CartDropdownButton>
+  </CartDropdownContainer>
 );
 
 const mapStateToProps = createStructuredSelector({
-  cartItems: selectCartItems,
+  cartItems: selectCartItems
 });
 
-export default withRouter(connect(mapStateToProps)(CartDropDown));
+export default withRouter(connect(mapStateToProps)(CartDropdown));
